@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/skip-thurm/employee-tracker/issues"
   },
-  "homepage": "https://github.com/skip-thurm/employee-tracker#readme"
+  "homepage": "https://github.com/skip-thurm/employee-tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.18.2",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.0.0"
+  }
 }
