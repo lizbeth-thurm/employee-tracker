@@ -68,7 +68,20 @@ inquirer
 // view all departments
 function viewDepts() {
 
+  app.get('/api/departments', (req, res) => {
+    const sql = `SELECT id, dept_name AS name FROM department`;
 
+    db.query(sql, (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+         return;
+      }
+      res.json({
+        message: 'success',
+        data: rows
+      });
+    });
+  });
 };
 
 // view all roles
