@@ -85,6 +85,13 @@ function viewDepts() {
 // view all roles
 function viewRoles() {
 
+  db.query("SELECT title FROM employee_role", (err, res) => {
+    try {
+      console.table(res);
+    } catch (err) {
+      console.log(err);
+    }
+  });
   mainPrompt();
 };
 
