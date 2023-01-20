@@ -71,8 +71,13 @@ mainPrompt();
 
 // view all departments
 function viewDepts() {
-  db.query("SELECT * FROM department", function (err, res) {
-    console.table(res);
+
+  db.query("SELECT * FROM department", (err, res) => {
+    try {
+      console.table(res);
+    } catch (err) {
+      console.log(err);
+    }
   });
   mainPrompt();
 };
@@ -121,3 +126,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
