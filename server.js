@@ -98,6 +98,13 @@ function viewRoles() {
 // view all employees
 function viewEmployees() {
 
+  db.query("SELECT first_name, last_name FROM employee", (err, res) => {
+    try {
+      console.table(res);
+    } catch (err) {
+      console.log(err);
+    }
+  });
   mainPrompt();
 };
 
