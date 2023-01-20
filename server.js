@@ -67,11 +67,11 @@ function mainPrompt() {
     });
 };
 
+// initiate main prompt
 mainPrompt();
 
 // view all departments
 function viewDepts() {
-
   db.query("SELECT * FROM department", (err, res) => {
     try {
       console.table(res);
@@ -84,7 +84,6 @@ function viewDepts() {
 
 // view all roles
 function viewRoles() {
-
   db.query("SELECT title FROM employee_role", (err, res) => {
     try {
       console.table(res);
@@ -97,7 +96,6 @@ function viewRoles() {
 
 // view all employees
 function viewEmployees() {
-
   db.query("SELECT first_name, last_name FROM employee", (err, res) => {
     try {
       console.table(res);
@@ -110,7 +108,31 @@ function viewEmployees() {
 
 // add a department
 function addDept() {
-
+  inquirer
+    .prompt([
+      {
+        name: "addDept",
+        type: "input",
+        message: "Please enter the name of the department you would like to add."
+      }
+    ])
+    .then((answer) => {
+      db.query("INSERT INTO department (dept_name) VALUES (?)", answer.addDept, (err, res) => {
+        try {
+          console.log("Department added successfully!");
+          mainPrompt();
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
   mainPrompt();
 };
 
