@@ -138,8 +138,32 @@ function addDept() {
 
 // add a role
 function addRole() {
-
-  mainPrompt();
+  inquirer
+  .prompt([
+    {
+      name: "addRole",
+      type: "input",
+      message: "Please enter the name of the role you would like to add."
+    }
+  ])
+  .then((answer) => {
+    db.query("INSERT INTO employee_role (title) VALUES (?)", answer.addRole, (err, res) => {
+      try {
+        console.log("Role added successfully!");
+        mainPrompt();
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
+mainPrompt();
 };
 
 // add an employee
