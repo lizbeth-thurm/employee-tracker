@@ -20,6 +20,7 @@ const db = mysql.createConnection(
 );
 
 function mainPrompt() {
+  console.log(" ");
   inquirer
     .prompt([
       {
@@ -67,13 +68,11 @@ function mainPrompt() {
     });
 };
 
-mainPrompt();
-
 // view all departments
 function viewDepts() {
-
   db.query("SELECT * FROM department", (err, res) => {
     try {
+      console.log(" ");
       console.table(res);
     } catch (err) {
       console.log(err);
@@ -84,31 +83,154 @@ function viewDepts() {
 
 // view all roles
 function viewRoles() {
-
+  db.query("SELECT * FROM employee_role", (err, res) => {
+    try {
+      console.log(" ");
+      console.table(res);
+    } catch (err) {
+      console.log(err);
+    }
+  });
   mainPrompt();
 };
 
 // view all employees
 function viewEmployees() {
-
+  db.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, department.dept_name, employee_role.salary, employee.manager_id FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id LEFT JOIN department ON employee_role.dept_id = department.id",
+    (err, res) => {
+      try {
+        console.log(" ");
+        console.table(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
   mainPrompt();
 };
 
 // add a department
 function addDept() {
-
+  console.log(" ");
+  inquirer
+    .prompt([
+      {
+        name: "addDept",
+        type: "input",
+        message: "Please enter the name of the department you would like to add."
+      }
+    ])
+    .then((answer) => {
+      db.query("INSERT INTO department (dept_name) VALUES (?)", answer.addDept, (err, res) => {
+        try {
+          console.log(" ");
+          console.log("Department added successfully!");
+          mainPrompt();
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
   mainPrompt();
 };
 
 // add a role
 function addRole() {
-
+  console.log(" ");
+  inquirer
+    .prompt([
+      {
+        name: "addRoleTitle",
+        type: "input",
+        message: "Please enter the title of the role you would like to add."
+      },
+      {
+        name: "addRoleSalary",
+        type: "input",
+        message: "Please enter the salary of the role you would like to add."
+      },
+      {
+        name: "addRoleDept",
+        type: "input",
+        message: "Please enter the department ID of the role you would like to add."
+      }
+    ])
+    .then((answer) => {
+      db.query(
+        "INSERT INTO employee_role (title, salary, dept_id) VALUES (?, ?, ?)",
+        [res.addRoleTitle, res.addRoleSalary, res.addRoleDept], (err, res) => {
+          try {
+            console.log(" ");
+            console.log("Role added successfully!");
+            mainPrompt();
+          } catch (err) {
+            console.log(err);
+          }
+        });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
   mainPrompt();
 };
 
 // add an employee
 function addEmployee() {
-
+  console.log(" ");
+  inquirer
+    .prompt([
+      {
+        name: "addEmployeeFirstName",
+        type: "input",
+        message: "Please enter the first name of the employee you would like to add."
+      },
+      {
+        name: "addEmployeeLastName",
+        type: "input",
+        message: "Please enter the last name of the employee you would like to add."
+      },
+      {
+        name: "addEmployeeRole",
+        type: "input",
+        message: "Please enter the role ID of the employee you would like to add."
+      },
+      {
+        name: "addEmployeeManager",
+        type: "input",
+        message: "Please enter the manager ID of the employee you would like to add (leave blank if they have no manager)."
+      }
+    ])
+    .then((answer) => {
+      db.query(
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        [res.addEmployeeFirstName, res.addEmployeeLastName, res.addEmployeeRole, res.addEmployeeManager], (err, res) => {
+          try {
+            console.log(" ");
+            console.log("Employee added successfully!");
+            mainPrompt();
+          } catch (err) {
+            console.log(err);
+          }
+        });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
   mainPrompt();
 };
 
@@ -126,4 +248,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
