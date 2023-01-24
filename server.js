@@ -235,8 +235,39 @@ function addEmployee() {
 
 // update an employee role
 function updateRole() {
-
-  mainPrompt();
+  console.log(" ");
+  inquirer
+    .prompt([
+      {
+        name: "selectEmployeeID",
+        type: "input",
+        message: "Please enter an emplopyee ID to update that employee."
+      },
+      {
+        name: "updateEmployeeRole",
+        type: "input",
+        message: "Please enter the role ID for the updated employee role."
+      }
+    ])
+    .then((answer) => {
+      db.query(
+        "UPDATE employee SET role_id = ? WHERE id = ?",
+        [answer.updateEmployeeRole, answer.selectEmployeeID], (err, res) => {
+          try {
+            console.log(" ");
+            console.log("Employee role updated successfully.");
+          } catch (err) {
+            console.log(err);
+          }
+        });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
 };
 
 // Default response for any other request (Not Found)
