@@ -19,6 +19,8 @@ const db = mysql.createConnection(
   console.log(`Connected to the employees_db database.`)
 );
 
+mainPrompt();
+
 function mainPrompt() {
   console.log(" ");
   inquirer
@@ -74,11 +76,11 @@ function viewDepts() {
     try {
       console.log(" ");
       console.table(res);
+      mainPrompt();
     } catch (err) {
       console.log(err);
     }
   });
-  mainPrompt();
 };
 
 // view all roles
@@ -87,11 +89,11 @@ function viewRoles() {
     try {
       console.log(" ");
       console.table(res);
+      mainPrompt();
     } catch (err) {
       console.log(err);
     }
   });
-  mainPrompt();
 };
 
 // view all employees
@@ -102,11 +104,11 @@ function viewEmployees() {
       try {
         console.log(" ");
         console.table(res);
+        mainPrompt();
       } catch (err) {
         console.log(err);
       }
     });
-  mainPrompt();
 };
 
 // add a department
@@ -124,7 +126,7 @@ function addDept() {
       db.query("INSERT INTO department (dept_name) VALUES (?)", answer.addDept, (err, res) => {
         try {
           console.log(" ");
-          console.log("Department added successfully!");
+          console.log("Department added successfully.");
           mainPrompt();
         } catch (err) {
           console.log(err);
@@ -138,7 +140,6 @@ function addDept() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // add a role
@@ -165,10 +166,10 @@ function addRole() {
     .then((answer) => {
       db.query(
         "INSERT INTO employee_role (title, salary, dept_id) VALUES (?, ?, ?)",
-        [res.addRoleTitle, res.addRoleSalary, res.addRoleDept], (err, res) => {
+        [answer.addRoleTitle, answer.addRoleSalary, answer.addRoleDept], (err, res) => {
           try {
             console.log(" ");
-            console.log("Role added successfully!");
+            console.log("Role added successfully.");
             mainPrompt();
           } catch (err) {
             console.log(err);
@@ -182,7 +183,6 @@ function addRole() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // add an employee
@@ -214,10 +214,10 @@ function addEmployee() {
     .then((answer) => {
       db.query(
         "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
-        [res.addEmployeeFirstName, res.addEmployeeLastName, res.addEmployeeRole, res.addEmployeeManager], (err, res) => {
+        [answer.addEmployeeFirstName, answer.addEmployeeLastName, answer.addEmployeeRole, answer.addEmployeeManager], (err, res) => {
           try {
             console.log(" ");
-            console.log("Employee added successfully!");
+            console.log("Employee added successfully.");
             mainPrompt();
           } catch (err) {
             console.log(err);
@@ -231,13 +231,44 @@ function addEmployee() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // update an employee role
 function updateRole() {
-
-  mainPrompt();
+  console.log(" ");
+  inquirer
+    .prompt([
+      {
+        name: "selectEmployeeID",
+        type: "input",
+        message: "Please enter an emplopyee ID to update that employee."
+      },
+      {
+        name: "updateEmployeeRole",
+        type: "input",
+        message: "Please enter the role ID for the updated employee role."
+      }
+    ])
+    .then((answer) => {
+      db.query(
+        "UPDATE employee SET role_id = ? WHERE id = ?",
+        [answer.updateEmployeeRole, answer.selectEmployeeID], (err, res) => {
+          try {
+            console.log(" ");
+            console.log("Employee role updated successfully.");
+            mainPrompt();
+          } catch (err) {
+            console.log(err);
+          }
+        });
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });
 };
 
 // Default response for any other request (Not Found)
