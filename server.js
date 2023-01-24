@@ -19,6 +19,8 @@ const db = mysql.createConnection(
   console.log(`Connected to the employees_db database.`)
 );
 
+mainPrompt();
+
 function mainPrompt() {
   console.log(" ");
   inquirer
@@ -74,11 +76,11 @@ function viewDepts() {
     try {
       console.log(" ");
       console.table(res);
+      mainPrompt();
     } catch (err) {
       console.log(err);
     }
   });
-  mainPrompt();
 };
 
 // view all roles
@@ -87,11 +89,11 @@ function viewRoles() {
     try {
       console.log(" ");
       console.table(res);
+      mainPrompt();
     } catch (err) {
       console.log(err);
     }
   });
-  mainPrompt();
 };
 
 // view all employees
@@ -102,11 +104,11 @@ function viewEmployees() {
       try {
         console.log(" ");
         console.table(res);
+        mainPrompt();
       } catch (err) {
         console.log(err);
       }
     });
-  mainPrompt();
 };
 
 // add a department
@@ -138,7 +140,6 @@ function addDept() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // add a role
@@ -182,7 +183,6 @@ function addRole() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // add an employee
@@ -214,7 +214,7 @@ function addEmployee() {
     .then((answer) => {
       db.query(
         "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
-        [res.addEmployeeFirstName, res.addEmployeeLastName, res.addEmployeeRole, res.addEmployeeManager], (err, res) => {
+        [answer.addEmployeeFirstName, answer.addEmployeeLastName, answer.addEmployeeRole, answer.addEmployeeManager], (err, res) => {
           try {
             console.log(" ");
             console.log("Employee added successfully!");
@@ -231,7 +231,6 @@ function addEmployee() {
         // Something else went wrong
       }
     });
-  mainPrompt();
 };
 
 // update an employee role
