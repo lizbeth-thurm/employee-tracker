@@ -126,7 +126,7 @@ function addDept() {
       db.query("INSERT INTO department (dept_name) VALUES (?)", answer.addDept, (err, res) => {
         try {
           console.log(" ");
-          console.log("Department added successfully!");
+          console.log("Department added successfully.");
           mainPrompt();
         } catch (err) {
           console.log(err);
@@ -169,7 +169,7 @@ function addRole() {
         [answer.addRoleTitle, answer.addRoleSalary, answer.addRoleDept], (err, res) => {
           try {
             console.log(" ");
-            console.log("Role added successfully!");
+            console.log("Role added successfully.");
             mainPrompt();
           } catch (err) {
             console.log(err);
@@ -217,7 +217,7 @@ function addEmployee() {
         [answer.addEmployeeFirstName, answer.addEmployeeLastName, answer.addEmployeeRole, answer.addEmployeeManager], (err, res) => {
           try {
             console.log(" ");
-            console.log("Employee added successfully!");
+            console.log("Employee added successfully.");
             mainPrompt();
           } catch (err) {
             console.log(err);
