@@ -166,7 +166,7 @@ function addRole() {
     .then((answer) => {
       db.query(
         "INSERT INTO employee_role (title, salary, dept_id) VALUES (?, ?, ?)",
-        [res.addRoleTitle, res.addRoleSalary, res.addRoleDept], (err, res) => {
+        [answer.addRoleTitle, answer.addRoleSalary, answer.addRoleDept], (err, res) => {
           try {
             console.log(" ");
             console.log("Role added successfully!");
