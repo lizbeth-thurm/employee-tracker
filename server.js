@@ -256,6 +256,7 @@ function updateRole() {
           try {
             console.log(" ");
             console.log("Employee role updated successfully.");
+            mainPrompt();
           } catch (err) {
             console.log(err);
           }
