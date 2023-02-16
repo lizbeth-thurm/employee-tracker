@@ -9,7 +9,7 @@ Users can view employees, departments, and employee roles as well as add and upd
 
 ## Links
 
-<a href="https://github.com/skip-thurm/employee-tracker">Link to Github Page with Code</a>
+<a href="https://github.com/lizbeth-thurm/employee-tracker">Link to Github Page with Code</a>
 
 <a href="https://youtu.be/H5U1j6YYfcE">Link to video of application being used.</a>
 
@@ -19,4 +19,4 @@ Skipper Thurman
 
 email: slthurman01@gmail.com
 
-<a href="https://github.com/skip-thurm">Personal Github Page</a>
+<a href="https://github.com/lizbeth-thurm">Personal Github Page</a>
